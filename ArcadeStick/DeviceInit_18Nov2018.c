@@ -158,6 +158,7 @@ void DeviceInit(void)
 	GpioCtrlRegs.GPADIR.bit.GPIO19 = 0; // 1=OUTput,  0=INput 
 //	GpioDataRegs.GPACLEAR.bit.GPIO19 = 1;	// uncomment if --> Set Low initially
 //	GpioDataRegs.GPASET.bit.GPIO19 = 1; // uncomment if --> Set High initially
+//	GpioCtrlRegs.GPAPUD.bit.GPIO19 = 1; //disable internal pull-up resistor
 //---------------------------------------------------------------
 //  GPIO-20 - GPIO-27 = Do Not Exist
 //---------------------------------------------------------------

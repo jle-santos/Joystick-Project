@@ -7,5 +7,5 @@
 #       or equal to the generated config header
 #
 linker.cmd: package/cfg/idle_p28L.xdl
-	$(SED) 's"^\"\(package/cfg/idle_p28Lcfg.cmd\)\"$""\"C:/Users/Lemuel/OneDrive/CapStone Group/Romalo (Karen dont look)/Code/ArcadeStick/Debug/configPkg/\1\""' package/cfg/idle_p28L.xdl > $@
+	$(SED) 's"^\"\(package/cfg/idle_p28Lcfg.cmd\)\"$""\"D:/ti/Projects/Joystick-Project/ArcadeStick/Debug/configPkg/\1\""' package/cfg/idle_p28L.xdl > $@
 	-$(SETDATE) -r:max package/cfg/idle_p28L.h compiler.opt compiler.opt.defs

@@ -27,8 +27,14 @@
 //#include <xdc/runtime/Log.h>
 #include <xdc/runtime/System.h>
 #include <ti/sysbios/BIOS.h>
+#include <ti/sysbios/knl/Swi.h>
+#include <ti/sysbios/knl/Task.h>
+#include <ti/sysbios/knl/Semaphore.h>
+/* Swi handle defined in swi.cfg */
+extern const Swi_Handle mySwi;
 
-
+/* Semaphore handle defined in task.cfg */
+extern const Semaphore_Handle lpsem;
 
 /* Flag used by idle function to check if interrupt occurred */
 volatile Bool isrFlag = FALSE;
@@ -38,6 +44,7 @@ volatile UInt tickCount = 0;
 
 // Global Variable:
 int16 pbcount = 0; //counts pushbutton pushes
+int16 pain = 0; //temporary for trouble shooting
 
 
 //function prototypes:
@@ -51,7 +58,7 @@ extern void DeviceInit(void);
 //declare global variables:
 int16 JOYSTICK_X; //J1 - 2
 int16 JOYSTICK_Y; //J2 - 10
-int16 DATA;
+int16 DATA = 0;
 
 
 Int main()
@@ -77,8 +84,9 @@ Int main()
  *  ======== myTickFxn ========
  *  Timer Tick function that increments a counter, and sets the isrFlag.
  */
-Void myTickFxn(UArg arg) 
+Void swiSCAN(UArg arg)
 {
+    pbcount++;
     AdcRegs.ADCSOCFRC1.all = 0x1; //start conversion via software
     while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0)
         {
@@ -91,10 +99,14 @@ Void myTickFxn(UArg arg)
     JOYSTICK_Y = AdcResult.ADCRESULT1;
     //LS (Everything above)
 
-    DATA = GpioDataRegs.GPADAT.bit.GPIO0;
+    DATA = GpioDataRegs.GPADAT.bit.GPIO19; //active low
     if(DATA >= 1)
     {
-        tickCount += 1;    /* increment the counter */
+        pain++;    /* increment the counter */
+    }
+
+    if ((pain % 10) == 0) {
+        Semaphore_post(lpsem);
     }
 
     isrFlag = TRUE;    /* tell background that new data is available */
@@ -117,14 +129,36 @@ Void myIdleFxn(Void)
     }
 }
 
-
-Void ButtonDetect(Void)
-
+// fires every 0.5 seconds
+// sets tick rate
+Void Tickrate(Void)
 {
-
-    pbcount++;
+    /* post a Swi to perform the "heavy lifting" */
+    Swi_post(mySwi);
 
 }
 
 
+/*
+ *  ======== myTaskFxn ========
+ *  Task function that pends on a semaphore until 10 ticks have
+ *  expired.
+ */
+Void LPtsk(Void)
+{
+    /*
+     * Do this forever
+     */
+    while (TRUE) {
+        /*
+         * Pend on "mySemaphore" until the timer ISR says
+         * its time to do something.
+         */
+        Semaphore_pend(lpsem, BIOS_WAIT_FOREVER);
 
+        /*
+         * Print the current value of tickCount to a log buffer.
+         */
+        System_printf("this is where it enters low power mode \n");
+    }
+}

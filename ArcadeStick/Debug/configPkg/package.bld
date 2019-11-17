@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/Lemuel/OneDrive/CapStone Group/Romalo (Karen dont look)/Code/ArcadeStick/idle.cfg',
+        cfgScript: 'D:/ti/Projects/Joystick-Project/ArcadeStick/idle.cfg',
         profile: 'release',
         cfgHome: 'configPkg',
 });
@@ -41,7 +41,7 @@ else {
 
 var thisObj = {
     cfg:        '../idle.cfg',
-    outputPath: 'C:/Users/Lemuel/OneDrive/CapStone Group/Romalo (Karen dont look)/Code/ArcadeStick/Debug/configPkg',
+    outputPath: 'D:/ti/Projects/Joystick-Project/ArcadeStick/Debug/configPkg',
     exeName:    'idle' + suffix,
     exeIntName: 'idle' + suffix.replace('.', '_'),
     targ:       targ,
