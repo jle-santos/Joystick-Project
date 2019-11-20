@@ -8,13 +8,16 @@
 #include <xdc/std.h>
 
 #include <ti/sysbios/knl/Swi.h>
-extern const ti_sysbios_knl_Swi_Handle mySwi;
+extern const ti_sysbios_knl_Swi_Handle swiscan;
 
 #include <ti/sysbios/knl/Task.h>
 extern const ti_sysbios_knl_Task_Handle tsk0;
 
 #include <ti/sysbios/knl/Semaphore.h>
 extern const ti_sysbios_knl_Semaphore_Handle lpsem;
+
+#include <ti/sysbios/knl/Swi.h>
+extern const ti_sysbios_knl_Swi_Handle swisend;
 
 extern int xdc_runtime_Startup__EXECFXN__C;
 
