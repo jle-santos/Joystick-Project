@@ -8,6 +8,8 @@ SHELL = cmd.exe
 OBJ_SRCS += \
 ../src/sysbios/BIOS.obj \
 ../src/sysbios/c28_Hwi_asm.obj \
-../src/sysbios/c28_Hwi_disp_asm.obj 
+../src/sysbios/c28_Hwi_disp_asm.obj \
+../src/sysbios/c28_IntrinsicsSupport_asm.obj \
+../src/sysbios/c28_TaskSupport_asm.obj 
 
 

@@ -2,13 +2,13 @@
 
 F2802x_GlobalVariableDefs.obj: ../F2802x_GlobalVariableDefs.c
 F2802x_GlobalVariableDefs.obj: ../Peripheral_Headers/F2802x_Device.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h
-F2802x_GlobalVariableDefs.obj: D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h
+F2802x_GlobalVariableDefs.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h
 F2802x_GlobalVariableDefs.obj: ../Peripheral_Headers/../Peripheral_Headers/F2802x_Adc.h
 F2802x_GlobalVariableDefs.obj: ../Peripheral_Headers/../Peripheral_Headers/F2802x_BootVars.h
 F2802x_GlobalVariableDefs.obj: ../Peripheral_Headers/../Peripheral_Headers/F2802x_DevEmu.h
@@ -28,13 +28,13 @@ F2802x_GlobalVariableDefs.obj: ../Peripheral_Headers/../Peripheral_Headers/F2802
 
 ../F2802x_GlobalVariableDefs.c: 
 ../Peripheral_Headers/F2802x_Device.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h: 
-D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/assert.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/_ti_config.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/linkage.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdarg.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdbool.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stddef.h: 
+C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include/stdint.h: 
 ../Peripheral_Headers/../Peripheral_Headers/F2802x_Adc.h: 
 ../Peripheral_Headers/../Peripheral_Headers/F2802x_BootVars.h: 
 ../Peripheral_Headers/../Peripheral_Headers/F2802x_DevEmu.h: 

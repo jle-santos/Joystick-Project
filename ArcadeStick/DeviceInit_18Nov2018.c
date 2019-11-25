@@ -45,7 +45,7 @@ void DeviceInit(void)
    //------------------------------------------------
    SysCtrlRegs.PCLKCR0.bit.SPIAENCLK = 0;	// SPI-A
    //------------------------------------------------
-   SysCtrlRegs.PCLKCR0.bit.SCIAENCLK = 0;  	// SCI-A
+   SysCtrlRegs.PCLKCR0.bit.SCIAENCLK = 1;  	// SCI-A
    //------------------------------------------------
    SysCtrlRegs.PCLKCR1.bit.ECAP1ENCLK = 0;	//eCAP1
    //------------------------------------------------
@@ -213,6 +213,32 @@ void DeviceInit(void)
 //---------------------------------------------------------------
 //---------------------------------------------------------------
 
+//---------------------------------------------------------------
+// INITIALIZE SCI (UART)
+//---------------------------------------------------------------
+	    SciaRegs.SCICCR.bit.STOPBITS = 0; //1 Stop bit
+	    SciaRegs.SCICCR.bit.PARITYENA = 0; //No parity
+	    SciaRegs.SCICCR.bit.LOOPBKENA = 0; //No loopback
+	    SciaRegs.SCICCR.bit.SCICHAR = 7; //8 Data bits
+
+	    //Set baud rate (LSPCLK = 15MHz)
+	    SciaRegs.SCIHBAUD = 0x0000;
+	    SciaRegs.SCILBAUD = 0x00C2; //9600 baudrate
+
+	    //Control register 1
+	    SciaRegs.SCICTL1.bit.RXENA = 1;
+	    SciaRegs.SCICTL1.bit.TXENA = 1;
+	    SciaRegs.SCICTL1.bit.SLEEP = 0; //Disable sleep
+	    SciaRegs.SCICTL1.bit.TXWAKE = 0;
+	    SciaRegs.SCICTL1.bit.SWRESET = 1;
+
+	    //Control register 2
+	    SciaRegs.SCICTL2.bit.TXINTENA = 1; //Enable interrupt
+	    SciaRegs.SCICTL2.bit.RXBKINTENA = 1;
+
+	    //FIFO Registers
+	    SciaRegs.SCIFFTX.all = 0xE080;
+	    SciaRegs.SCIFFRX.all = 0x2084;
 //---------------------------------------------------------------
 // INITIALIZE A-D
 //---------------------------------------------------------------

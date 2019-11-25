@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS
+CG_TOOL_ROOT := C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS
 
 GEN_OPTS__FLAG := --cmd_file="configPkg/compiler.opt"
 GEN_CMDS__FLAG := -l"configPkg/linker.cmd"
@@ -14,6 +14,11 @@ ORDERED_OBJS += \
 "./DeviceInit_18Nov2018.obj" \
 "./F2802x_GlobalVariableDefs.obj" \
 "./idle.obj" \
+"../src/sysbios/BIOS.obj" \
+"../src/sysbios/c28_Hwi_asm.obj" \
+"../src/sysbios/c28_Hwi_disp_asm.obj" \
+"../src/sysbios/c28_IntrinsicsSupport_asm.obj" \
+"../src/sysbios/c28_TaskSupport_asm.obj" \
 "../F2802x_Headers_BIOS.cmd" \
 "../TMS320F28027.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -27,7 +32,9 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include src/sysbios/subdir_vars.mk
 -include subdir_rules.mk
+-include src/sysbios/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -144,14 +151,14 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 ArcadeStick.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/bin/cl2000" -v28 -ml -mt -g --diag_warning=225 --diag_wrap=off --display_error_number -z -m"ArcadeStick.map" --stack_size=0x300 --warn_sections -i"D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/lib" -i"D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="ArcadeStick_linkInfo.xml" --rom_model -o "ArcadeStick.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/bin/cl2000" -v28 -ml -mt -g --diag_warning=225 --diag_wrap=off --display_error_number -z -m"ArcadeStick.map" --stack_size=0x300 --warn_sections -i"C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/lib" -i"C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="ArcadeStick_linkInfo.xml" --rom_model -o "ArcadeStick.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 ArcadeStick.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: C2000 Hex Utility'
-	"D:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/bin/hex2000"  -o "ArcadeStick.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS/bin/hex2000"  -o "ArcadeStick.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
