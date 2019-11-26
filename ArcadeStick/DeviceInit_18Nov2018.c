@@ -136,9 +136,9 @@ void DeviceInit(void)
 //	GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;	// uncomment if --> Set Low initially
 //	GpioDataRegs.GPASET.bit.GPIO12 = 1; // uncomment if --> Set High initially
 	GpioCtrlRegs.GPAPUD.bit.GPIO12 = 0; //disable internal pull-up resistor
-	GpioIntRegs.GPIOXINT1SEL.bit.GPIOSEL = 17;
-	XIntruptRegs.XINT1CR.bit.POLARITY = 1;
-	XIntruptRegs.XINT1CR.bit.ENABLE = 1;
+//	GpioIntRegs.GPIOXINT1SEL.bit.GPIOSEL = 17;
+//	XIntruptRegs.XINT1CR.bit.POLARITY = 1;
+//	XIntruptRegs.XINT1CR.bit.ENABLE = 1;
 //---------------------------------------------------------------
 //  GPIO-13 - GPIO-15 = Do Not Exist
 //---------------------------------------------------------------
@@ -180,13 +180,6 @@ void DeviceInit(void)
 //	GpioDataRegs.GPASET.bit.GPIO28 = 1; // uncomment if --> Set High initially
 	GpioCtrlRegs.GPAPUD.bit.GPIO28 = 0; //disable internal pull-up resistor
 //---------------------------------------------------------------
-//SCI Test
-//  GPIO-29 - PIN FUNCTION = --Spare-- (can connect to SCITX on LaunchPad)
-	GpioCtrlRegs.GPAMUX2.bit.GPIO29 = 1; // 0=GPIO,  1=SCITXD-A,  2=I2C-SCL,  3=TZ3
-	GpioCtrlRegs.GPADIR.bit.GPIO29 = 0; // 1=OUTput,  0=INput
-//	GpioDataRegs.GPACLEAR.bit.GPIO29 = 1;	// uncomment if --> Set Low initially
-//	GpioDataRegs.GPASET.bit.GPIO29 = 1; // uncomment if --> Set High initially
-	GpioCtrlRegs.GPAPUD.bit.GPIO29 = 0; //disable internal pull-up resistor
 //---------------------------------------------------------------
 //  GPIO-30 - GPIO-31 = Do Not Exist
 //---------------------------------------------------------------
@@ -224,7 +217,7 @@ void DeviceInit(void)
 
 	    //Set baud rate (LSPCLK = 15MHz)
 	    SciaRegs.SCIHBAUD = 0x0000;
-	    SciaRegs.SCILBAUD = 0x00C2; //9600 baudrate
+	    SciaRegs.SCILBAUD = 164; //9600 baudrate
 
 	    //Control register 1
 	    SciaRegs.SCICTL1.bit.RXENA = 1;
@@ -240,6 +233,14 @@ void DeviceInit(void)
 	    //FIFO Registers
 	    SciaRegs.SCIFFTX.all = 0xE080;
 	    SciaRegs.SCIFFRX.all = 0x2084;
+
+	    //SCI GPIO Enable
+	    //  GPIO-29 - PIN FUNCTION = --Spare-- (can connect to SCITX on LaunchPad)
+        GpioCtrlRegs.GPAMUX2.bit.GPIO29 = 1; // 0=GPIO,  1=SCITXD-A,  2=I2C-SCL,  3=TZ3
+        GpioCtrlRegs.GPADIR.bit.GPIO29 = 0; // 1=OUTput,  0=INput
+        //  GpioDataRegs.GPACLEAR.bit.GPIO29 = 1;   // uncomment if --> Set Low initially
+        //  GpioDataRegs.GPASET.bit.GPIO29 = 1; // uncomment if --> Set High initially
+        GpioCtrlRegs.GPAPUD.bit.GPIO29 = 0; //disable internal pull-up resistor
 //---------------------------------------------------------------
 // INITIALIZE A-D
 //---------------------------------------------------------------

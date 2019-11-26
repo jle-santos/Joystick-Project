@@ -63,13 +63,16 @@ int16 down_button = 0; // Corresponds to the 'down' button on the D-pad
 int16 left_button = 0; // Corresponds to the 'left' button on the D-pad
 int16 right_button = 0; // Corresponds to the 'right' button on the D-pad
 
-int16 JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
-int16 JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
+unsigned long JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
+unsigned long JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
+unsigned long Temp;
+
 int16 LP_detec = 0;
 
 
 //function prototypes:
 extern void DeviceInit(void);
+unsigned int ScaleADC(unsigned int raw);
 
 /*
  *  ======== main ========
@@ -107,9 +110,10 @@ Void swiSCAN(UArg arg)
         }
     AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear interrupt flag
 
+    Temp = 255*(AdcResult.ADCRESULT0);
 
-    JOYSTICK_X = AdcResult.ADCRESULT0; //get reading
-    JOYSTICK_Y = AdcResult.ADCRESULT1;
+    JOYSTICK_X = Temp/4095; //get X Reading
+    JOYSTICK_Y = AdcResult.ADCRESULT1; //Get Y Reading
     //LS (Everything above)
 
     int16 test1; // test input value
@@ -214,15 +218,15 @@ Void swiSCAN(UArg arg)
         left_button = 0;
     }
 
-    /*
-    test12 = GpioDataRegs.GPADAT.bit.GPIO29; // test for select button press on GPIO29
+
+    test12 = GpioDataRegs.GPADAT.bit.GPIO12; // test for select button press on GPIO12
     if(test12 == 0)
     {
         right_button = 1;
     } else {
         right_button = 0;
     }
-    */
+
 
     //if ((pain % 10) == 0) {
     //    Semaphore_post(lpsem);
@@ -232,13 +236,24 @@ Void swiSCAN(UArg arg)
     Swi_post(swisend);
 }
 
+unsigned int ScaleADC(unsigned int raw)
+{
+    unsigned int ScaledOutput = 0;
+
+    ScaledOutput = (255)*raw;
+    ScaledOutput = ScaledOutput/4095;
+
+    return ScaledOutput;
+}
+
+
 Void swiUART(UArg arg)
 {
-    //int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
-    //int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
+    int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
+    int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
     // i have no idea how the adc works int16 frame3[8] =
 
-    SciaRegs.SCITXBUF = 0xAA;
+    SciaRegs.SCITXBUF = 0x48;
 }
 
 
