@@ -65,7 +65,6 @@ int16 right_button = 0; // Corresponds to the 'right' button on the D-pad
 
 unsigned int JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
 unsigned int JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
-unsigned int Temp;
 
 int16 LP_detec = 0;
 
@@ -110,10 +109,8 @@ Void swiSCAN(UArg arg)
         }
     AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear interrupt flag
 
-    Temp = 255*(AdcResult.ADCRESULT0);
-
-    JOYSTICK_X = Temp/4095; //get X Reading
-    JOYSTICK_Y = AdcResult.ADCRESULT1; //Get Y Reading
+    JOYSTICK_X = ScaleADC(AdcResult.ADCRESULT0); //get X Reading
+    JOYSTICK_Y = ScaleADC(AdcResult.ADCRESULT1); //Get Y Reading
     //LS (Everything above)
 
     int16 test1; // test input value
@@ -240,8 +237,7 @@ unsigned int ScaleADC(unsigned int raw)
 {
     unsigned int ScaledOutput = 0;
 
-    ScaledOutput = (255)*raw;
-    ScaledOutput = ScaledOutput/4095;
+    ScaledOutput = raw/16;
 
     return ScaledOutput;
 }

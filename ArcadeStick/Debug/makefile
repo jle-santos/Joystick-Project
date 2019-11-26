@@ -14,11 +14,6 @@ ORDERED_OBJS += \
 "./DeviceInit_18Nov2018.obj" \
 "./F2802x_GlobalVariableDefs.obj" \
 "./idle.obj" \
-"../src/sysbios/BIOS.obj" \
-"../src/sysbios/c28_Hwi_asm.obj" \
-"../src/sysbios/c28_Hwi_disp_asm.obj" \
-"../src/sysbios/c28_IntrinsicsSupport_asm.obj" \
-"../src/sysbios/c28_TaskSupport_asm.obj" \
 "../F2802x_Headers_BIOS.cmd" \
 "../TMS320F28027.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -32,9 +27,7 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
--include src/sysbios/subdir_vars.mk
 -include subdir_rules.mk
--include src/sysbios/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

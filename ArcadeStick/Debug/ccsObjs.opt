@@ -1,1 +1,1 @@
-"./DelayUs.obj" "./DeviceInit_18Nov2018.obj" "./F2802x_GlobalVariableDefs.obj" "./idle.obj" "../src/sysbios/BIOS.obj" "../src/sysbios/c28_Hwi_asm.obj" "../src/sysbios/c28_Hwi_disp_asm.obj" "../src/sysbios/c28_IntrinsicsSupport_asm.obj" "../src/sysbios/c28_TaskSupport_asm.obj" "../F2802x_Headers_BIOS.cmd" "../TMS320F28027.cmd" -l"configPkg/linker.cmd" -llibc.a 
+"./DelayUs.obj" "./DeviceInit_18Nov2018.obj" "./F2802x_GlobalVariableDefs.obj" "./idle.obj" "../F2802x_Headers_BIOS.cmd" "../TMS320F28027.cmd" -l"configPkg/linker.cmd" -llibc.a 
