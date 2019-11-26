@@ -214,6 +214,7 @@ Void swiSCAN(UArg arg)
         left_button = 0;
     }
 
+    /*
     test12 = GpioDataRegs.GPADAT.bit.GPIO29; // test for select button press on GPIO29
     if(test12 == 0)
     {
@@ -221,7 +222,7 @@ Void swiSCAN(UArg arg)
     } else {
         right_button = 0;
     }
-
+    */
 
     //if ((pain % 10) == 0) {
     //    Semaphore_post(lpsem);
@@ -233,9 +234,11 @@ Void swiSCAN(UArg arg)
 
 Void swiUART(UArg arg)
 {
-    int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
-    int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
+    //int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
+    //int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
     // i have no idea how the adc works int16 frame3[8] =
+
+    SciaRegs.SCITXBUF = 0xAA;
 }
 
 
