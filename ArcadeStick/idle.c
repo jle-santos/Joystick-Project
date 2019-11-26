@@ -249,8 +249,8 @@ Void swiUART(UArg arg)
     //int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
     // i have no idea how the adc works int16 frame3[8] =
 
-    SciaRegs.SCITXBUF = JOYSTICK_X;
-    SciaRegs.SCITXBUF = JOYSTICK_Y;
+    SciaRegs.SCITXBUF = JOYSTICK_X; //Frame 2
+    SciaRegs.SCITXBUF = JOYSTICK_Y; //Frame 2
 }
 
 
