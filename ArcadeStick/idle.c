@@ -63,9 +63,9 @@ int16 down_button = 0; // Corresponds to the 'down' button on the D-pad
 int16 left_button = 0; // Corresponds to the 'left' button on the D-pad
 int16 right_button = 0; // Corresponds to the 'right' button on the D-pad
 
-unsigned long JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
-unsigned long JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
-unsigned long Temp;
+unsigned int JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
+unsigned int JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
+unsigned int Temp;
 
 int16 LP_detec = 0;
 

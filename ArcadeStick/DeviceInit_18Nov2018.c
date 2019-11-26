@@ -130,7 +130,7 @@ void DeviceInit(void)
 //---------------------------------------------------------------
 //  GPIO-08 - GPIO-11 Do Not Exist
 //---------------------------------------------------------------
-//  GPIO-12 - PIN FUNCTION = Normally Open pushbutton S3 on LaunchPad (pulled-down)
+//  GPIO-12 - PIN FUNCTION = Normally Open pushbutton S3 on LaunchPad (pulled-down) (Rewritten to RIGHT)
 	GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 0; // 0=GPIO,  1=TZ1,  2=SCITX-A,  3=Resv
 	GpioCtrlRegs.GPADIR.bit.GPIO12 = 0; // 1=OUTput,  0=INput 
 //	GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;	// uncomment if --> Set Low initially
