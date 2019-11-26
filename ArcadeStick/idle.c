@@ -245,11 +245,12 @@ unsigned int ScaleADC(unsigned int raw)
 
 Void swiUART(UArg arg)
 {
-    int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
-    int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
+    //int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
+    //int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
     // i have no idea how the adc works int16 frame3[8] =
 
-    SciaRegs.SCITXBUF = 0x48;
+    SciaRegs.SCITXBUF = JOYSTICK_X;
+    SciaRegs.SCITXBUF = JOYSTICK_Y;
 }
 
 
