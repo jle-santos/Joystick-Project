@@ -335,7 +335,7 @@ Void LPtsk(Void)
          * its time to do something.
          */
         Semaphore_pend(lpsem, BIOS_WAIT_FOREVER);
-        CpuTimer0Regs.TCR.bit.TIE = 0;
+        CpuTimer0Regs.TCR.bit.TIE = 0;//disable timer
         asm(" IDLE");
     }
 }
@@ -343,7 +343,7 @@ Void LPtsk(Void)
 Void awaken(Void)
 {
     System_printf("Awaken\n");
-    CpuTimer0Regs.TCR.bit.TIE = 1;
+    CpuTimer0Regs.TCR.bit.TIE = 1;//re-enable timer
     LP_count = 0;
 
 }
