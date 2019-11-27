@@ -25,11 +25,16 @@
 #include "Peripheral_Headers/F2802x_Device.h"
 #include <xdc/std.h>
 //#include <xdc/runtime/Log.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <xdc/runtime/System.h>
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Swi.h>
 #include <ti/sysbios/knl/Task.h>
 #include <ti/sysbios/knl/Semaphore.h>
+#include <ti/sysbios/utils/Load.h>
+
 /* Swi handle defined in swi.cfg */
 extern const Swi_Handle swiscan;
 extern const Swi_Handle swisend;
@@ -37,8 +42,6 @@ extern const Swi_Handle swisend;
 /* Semaphore handle defined in task.cfg */
 extern const Semaphore_Handle lpsem;
 
-/* Flag used by idle function to check if interrupt occurred */
-volatile Bool isrFlag = FALSE;
 
 /* Counter incremented by timer interrupt */
 volatile UInt tickCount = 0;
@@ -66,7 +69,8 @@ int16 right_button = 0; // Corresponds to the 'right' button on the D-pad
 unsigned int JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
 unsigned int JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
 
-int16 LP_detec = 0;
+int16 LP_count = 0; // low power counter
+
 
 
 //function prototypes:
@@ -78,7 +82,11 @@ unsigned int ScaleADC(unsigned int raw);
  */
 Int main()
 {
-    /*
+
+    SysCtrlRegs.LPMCR0.bit.LPM = 0x0000; // LPM mode = Idle
+    //SysCtrlRegs.LPMCR0.bit.LPM = 0x0001; // LPM mode = Standby
+    //SysCtrlRegs.LPMCR0.bit.LPM = 0x2; // LPM mode = Halt
+    /*D
      * Print "Gamer's Rise Up" to a log buffer.
      */
     System_printf("Gamer's Rise Up\n");
@@ -101,6 +109,7 @@ Int main()
  */
 Void swiSCAN(UArg arg)
 {
+    GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;//determine runtime of thread
 
     AdcRegs.ADCSOCFRC1.all = 0x1; //start conversion via software
     while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0)
@@ -143,7 +152,7 @@ Void swiSCAN(UArg arg)
         S_button = 0;
     }
 
-    test3 = GpioDataRegs.GPADAT.bit.GPIO0; // test for Triangle button press on GPIO0
+    test3 = GpioDataRegs.GPADAT.bit.GPIO16; // test for Triangle button press on GPIO0
     if(test3 == 0) //active high
     {
         T_button = 1;
@@ -191,7 +200,7 @@ Void swiSCAN(UArg arg)
         select_button = 0;
     }
 
-    test9 = GpioDataRegs.GPADAT.bit.GPIO6; // test for select button press on GPIO6
+    test9 = GpioDataRegs.GPADAT.bit.GPIO6; // test for up button press on GPIO6
     if(test9 == 0)
     {
         up_button = 1;
@@ -199,7 +208,7 @@ Void swiSCAN(UArg arg)
         up_button = 0;
     }
 
-    test10 = GpioDataRegs.GPADAT.bit.GPIO7; // test for select button press on GPIO7
+    test10 = GpioDataRegs.GPADAT.bit.GPIO7; // test for down button press on GPIO7
     if(test10 == 0)
     {
         down_button = 1;
@@ -207,7 +216,7 @@ Void swiSCAN(UArg arg)
         down_button = 0;
     }
 
-    test11 = GpioDataRegs.GPADAT.bit.GPIO28; // test for select button press on GPIO28
+    test11 = GpioDataRegs.GPADAT.bit.GPIO28; // test for left button press on GPIO28
     if(test11 == 0)
     {
         left_button = 1;
@@ -216,7 +225,7 @@ Void swiSCAN(UArg arg)
     }
 
 
-    test12 = GpioDataRegs.GPADAT.bit.GPIO12; // test for select button press on GPIO12
+    test12 = GpioDataRegs.GPADAT.bit.GPIO17; // test for right button press on GPIO12
     if(test12 == 0)
     {
         right_button = 1;
@@ -229,7 +238,7 @@ Void swiSCAN(UArg arg)
     //    Semaphore_post(lpsem);
     //}
 
-    isrFlag = TRUE;    /* tell background that new data is available */
+
     Swi_post(swisend);
 }
 
@@ -245,12 +254,44 @@ unsigned int ScaleADC(unsigned int raw)
 
 Void swiUART(UArg arg)
 {
-    //int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
-    //int16 frame2[8] = { 0, 0, 0, 0, up_button, down_button, left_button, right_button};
-    // i have no idea how the adc works int16 frame3[8] =
+    GpioDataRegs.GPACLEAR.bit.GPIO0 = 1; //determine run time of thread
+    int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
+    int16 frame1_dec = 0;
+    int16 frame2_dec = 0;
+    int16 i;
+    // calculates decimal value for frame 1
+    for (i = 0; i < 8; ++i) {
+        frame1_dec <<= 1;
+        frame1_dec += frame1[i];
+    }
+
+    int16 frame2[8] = {up_button, down_button, left_button, right_button, 0, 0, 0, 0};
+    // calculates decimal value for frame 2
+    for (i = 0; i < 8; ++i) {
+        frame2_dec <<= 1;
+        frame2_dec += frame2[i];
+    }
+
+
 
     SciaRegs.SCITXBUF = JOYSTICK_X; //Frame 2
     SciaRegs.SCITXBUF = JOYSTICK_Y; //Frame 2
+
+    // if frame1 and frame2 are empty incement counter
+    if (frame1_dec == 0 && frame2_dec == 0)
+    {
+        LP_count += 1;
+    }
+    else // set counter back to zero
+    {
+      LP_count = 0;
+    }
+
+    // if no buttons have been pressed for 1 min (tick 0.5sec) enter lp mode
+    if (LP_count >= 120)
+    {
+        Semaphore_post(lpsem);
+    }
 }
 
 
@@ -262,14 +303,9 @@ Void swiUART(UArg arg)
  */
 Void myIdleFxn(Void) 
 {
-    if (isrFlag == TRUE) {
-        isrFlag = FALSE;
-        /*
-         * Print the current value of tickCount to a log buffer. 
-         */
-        GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;
-        System_printf("Tick Count = %d\n", tickCount);
-    }
+    GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;//determine run time of thread
+  //load = Load_getCPULoad();
+
 }
 
 // fires every 0.5 seconds
@@ -277,6 +313,7 @@ Void myIdleFxn(Void)
 Void Tickrate(Void)
 {
     /* post a Swi to perform the "heavy lifting" */
+    GpioDataRegs.GPASET.bit.GPIO1 = 1;
     Swi_post(swiscan);
 
 }
@@ -294,14 +331,19 @@ Void LPtsk(Void)
      */
     while (TRUE) {
         /*
-         * Pend on "mySemaphore" until the timer ISR says
+         * Pend on "lpsem" until the timer ISR says
          * its time to do something.
          */
         Semaphore_pend(lpsem, BIOS_WAIT_FOREVER);
-
-        /*
-         * Print the current value of tickCount to a log buffer.
-         */
-        System_printf("this is where it enters low power mode \n");
+        CpuTimer0Regs.TCR.bit.TIE = 0;
+        asm(" IDLE");
     }
+}
+
+Void awaken(Void)
+{
+    System_printf("Awaken\n");
+    CpuTimer0Regs.TCR.bit.TIE = 1;
+    LP_count = 0;
+
 }

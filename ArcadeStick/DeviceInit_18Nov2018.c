@@ -9,7 +9,7 @@
 //===============================================================
 
 #include "Peripheral_Headers/F2802x_Device.h"
-
+#include "Peripheral_Headers/F2802x_CpuTimers.h"
 //function prototypes:
 extern void DelayUs(Uint16); //LS
 
@@ -74,7 +74,7 @@ void DeviceInit(void)
 //---------------------------------------------------------------
 //  GPIO-00 - PIN FUNCTION = blue LED D2 (rightmost on LaunchPad)
 	GpioCtrlRegs.GPAMUX1.bit.GPIO0 = 0; // 0=GPIO,  1=EPWM1A,  2=Resv,  3=Resv
-	GpioCtrlRegs.GPADIR.bit.GPIO0 = 0; // 1=OUTput,  0=INput
+	GpioCtrlRegs.GPADIR.bit.GPIO0 = 1; // 1=OUTput,  0=INput
 //	GpioDataRegs.GPACLEAR.bit.GPIO0 = 1; // uncomment if --> Set Low initially
 //	GpioDataRegs.GPASET.bit.GPIO0 = 1; // uncomment if --> Set High initially
     GpioCtrlRegs.GPAPUD.bit.GPIO0 = 0; //disable internal pull-up resistor
@@ -135,10 +135,10 @@ void DeviceInit(void)
 	GpioCtrlRegs.GPADIR.bit.GPIO12 = 0; // 1=OUTput,  0=INput 
 //	GpioDataRegs.GPACLEAR.bit.GPIO12 = 1;	// uncomment if --> Set Low initially
 //	GpioDataRegs.GPASET.bit.GPIO12 = 1; // uncomment if --> Set High initially
-	GpioCtrlRegs.GPAPUD.bit.GPIO12 = 0; //disable internal pull-up resistor
-//	GpioIntRegs.GPIOXINT1SEL.bit.GPIOSEL = 17;
-//	XIntruptRegs.XINT1CR.bit.POLARITY = 1;
-//	XIntruptRegs.XINT1CR.bit.ENABLE = 1;
+	GpioCtrlRegs.GPAPUD.bit.GPIO12 = 1; //disable internal pull-up resistor
+	GpioIntRegs.GPIOXINT1SEL.bit.GPIOSEL = 12;
+	XIntruptRegs.XINT1CR.bit.POLARITY = 1;
+	XIntruptRegs.XINT1CR.bit.ENABLE = 1;
 //---------------------------------------------------------------
 //  GPIO-13 - GPIO-15 = Do Not Exist
 //---------------------------------------------------------------
@@ -156,6 +156,7 @@ void DeviceInit(void)
 	GpioCtrlRegs.GPADIR.bit.GPIO17 = 0; // 1=OUTput,  0=INput 
 //	GpioDataRegs.GPACLEAR.bit.GPIO17 = 1;	// uncomment if --> Set Low initially
 //	GpioDataRegs.GPASET.bit.GPIO17 = 1; // uncomment if --> Set High initially
+	GpioCtrlRegs.GPAPUD.bit.GPIO17 = 0; //disable internal pull-up resistor
 //---------------------------------------------------------------
 //  GPIO-18 - PIN FUNCTION = --Spare--
 	GpioCtrlRegs.GPAMUX2.bit.GPIO18 = 0; // 0=GPIO,  1=SPICLK-A,  2=SCITX-A,  3=XCLKOUT

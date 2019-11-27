@@ -19,6 +19,9 @@ extern const ti_sysbios_knl_Semaphore_Handle lpsem;
 #include <ti/sysbios/knl/Swi.h>
 extern const ti_sysbios_knl_Swi_Handle swisend;
 
+#include <ti/sysbios/family/c28/Hwi.h>
+extern const ti_sysbios_family_c28_Hwi_Handle hwi0;
+
 extern int xdc_runtime_Startup__EXECFXN__C;
 
 extern int xdc_runtime_Startup__RESETFXN__C;
