@@ -1678,7 +1678,7 @@ __FAR__ const xdc_SizeT ti_sysbios_utils_Load_Module_State_taskList__O = offseto
  *  Define absolute path prefix for this executable's
  *  configuration generated files.
  */
-xdc__META(__ASM__, "@(#)__ASM__ = D:/ti/Projects/Joystick-Project/ArcadeStick/Debug/configPkg/package/cfg/idle_p28L");
+xdc__META(__ASM__, "@(#)__ASM__ = C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/Debug/configPkg/package/cfg/idle_p28L");
 
 /*
  *  ======== __ISA__ ========

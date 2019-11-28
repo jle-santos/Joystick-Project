@@ -271,8 +271,9 @@ Void swiUART(UArg arg)
         frame2_dec <<= 1;
         frame2_dec += frame2[i];
     }
-
-
+    //Buttons
+    SciaRegs.SCITXBUF = frame1_dec;
+    SciaRegs.SCITXBUF = frame2_dec;
 
     SciaRegs.SCITXBUF = JOYSTICK_X; //Frame 2
     SciaRegs.SCITXBUF = JOYSTICK_Y; //Frame 2

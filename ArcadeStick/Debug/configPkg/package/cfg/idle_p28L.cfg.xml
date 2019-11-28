@@ -44,7 +44,7 @@
             usedby="configPkg"/>
 </targets>
 <imports>
-    <package name="xdc.services.global" version="1,0,0,0" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.global" version="1,0,0,0" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.services.global.Clock"
                 used="true"
                 uses="">
@@ -56,25 +56,25 @@
                 uses="">
         </module>
     </package>
-    <package name="xdc" version="1,1,1,0" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc" version="1,1,1,0" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.Warnings"
                 used="false"
                 uses="">
         </module>
     </package>
-    <package name="xdc.corevers" version="16,0,2,0" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.corevers" version="16,0,2,0" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
     </package>
-    <package name="xdc.shelf" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.shelf" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
     </package>
-    <package name="xdc.services.spec" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.spec" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
     </package>
-    <package name="xdc.services.intern.xsr" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.intern.xsr" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
     </package>
-    <package name="xdc.services.intern.gen" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.intern.gen" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
     </package>
-    <package name="xdc.services.intern.cmd" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.intern.cmd" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
     </package>
-    <package name="xdc.bld" version="1,0,2,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.bld" version="1,0,2,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.bld.BuildEnvironment"
                 used="false"
                 uses="">
@@ -128,7 +128,7 @@
                 uses="">
         </module>
     </package>
-    <package name="ti.targets" version="1,0,3,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.targets" version="1,0,3,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.targets.C28"
                 used="false"
                 uses="">
@@ -154,7 +154,7 @@
                 uses="">
         </module>
     </package>
-    <package name="xdc.rov" version="1,0,1,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.rov" version="1,0,1,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.rov.Model"
                 used="false"
                 uses="">
@@ -184,7 +184,7 @@
                 uses="">
         </module>
     </package>
-    <package name="xdc.runtime" version="2,1,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.runtime" version="2,1,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.runtime.Assert"
                 used="true"
                 uses="">
@@ -3197,21 +3197,21 @@
                 uses="">
         </module>
     </package>
-    <package name="xdc.services.getset" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.getset" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.services.getset.GetSet"
                 used="false"
                 uses="">
         </module>
     </package>
-    <package name="ti.targets.rts2800" version="1,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.targets.rts2800" version="1,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.targets.rts2800.Settings"
                 used="false"
                 uses="">
         </module>
     </package>
-    <package name="ti.sysbios.interfaces" version="2,0,0,0,0" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.interfaces" version="2,0,0,0,0" repository="C:/ti/bios_6_76_03_01/packages/">
     </package>
-    <package name="ti.sysbios.family" version="2,0,0,0,0" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.family" version="2,0,0,0,0" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.family.Settings"
                 used="true"
                 uses="">
@@ -3228,14 +3228,14 @@
             <feature name="familyName" type="string" value="c28"/>
         </module>
     </package>
-    <package name="ti.sysbios.rts" version="2,0,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.rts" version="2,0,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.rts.MemAlloc"
                 used="true"
                 uses="">
             <feature name="generateFunctions" type="boolean" value="true"/>
         </module>
     </package>
-    <package name="xdc.runtime.knl" version="1,0,0,1542835756466" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.runtime.knl" version="1,0,0,1542835756466" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.runtime.knl.GateH"
                 used="false"
                 uses="">
@@ -3297,7 +3297,7 @@
                 uses="">
         </module>
     </package>
-    <package name="ti.catalog.c2800" version="1,0,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.catalog.c2800" version="1,0,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.catalog.c2800.TMS320C2801"
                 used="false"
                 uses="">
@@ -3475,9 +3475,9 @@
                 uses="">
         </module>
     </package>
-    <package name="ti.catalog" version="1,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.catalog" version="1,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
     </package>
-    <package name="xdc.platform" version="1,0,1,0" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.platform" version="1,0,1,0" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.platform.ExeContext"
                 used="true"
                 uses="">
@@ -3487,7 +3487,7 @@
                 uses="">
         </module>
     </package>
-    <package name="xdc.cfg" version="1,0,2,0" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.cfg" version="1,0,2,0" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.cfg.Program"
                 used="true"
                 uses="">
@@ -3536,13 +3536,13 @@
         <module name="xdc.cfg.SourceDir"
                 used="true"
                 uses="">
-            <feature name="outputDir" type="string" value="D%3A%5Cti%5CProjects%5CJoystick-Project%5CArcadeStick/src"/>
+            <feature name="outputDir" type="string" value="C%3A%5CUsers%5CLemuel%5CDesktop%5CJoystick-Project%5CArcadeStick/src"/>
             <feature name="toBuildDir" type="string" value=".."/>
             <feature name="makefileName" type="string" value="makefile.libs"/>
             <feature name="verbose" type="number" value="2"/>
         </module>
     </package>
-    <package name="ti.catalog.c2800.init" version="1,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.catalog.c2800.init" version="1,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.catalog.c2800.init.Boot"
                 used="true"
                 uses="">
@@ -3663,7 +3663,7 @@
             <feature name="concertoDevice" type="boolean" value="false"/>
         </module>
     </package>
-    <package name="ti.platforms.tms320x28" version="1,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.platforms.tms320x28" version="1,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.platforms.tms320x28.Platform"
                 used="true"
                 uses="">
@@ -3673,7 +3673,7 @@
             <feature name="genAliases" type="boolean" value="true"/>
         </module>
     </package>
-    <package name="ti.sysbios" version="2,0,0,0,0" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios" version="2,0,0,0,0" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.BIOS"
                 used="true"
                 uses="">
@@ -3955,7 +3955,7 @@
             </feature>
         </module>
     </package>
-    <package name="ti.sysbios.hal" version="2,0,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.hal" version="2,0,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.hal.Cache"
                 used="false"
                 uses="">
@@ -4238,7 +4238,7 @@
                 uses="">
         </module>
     </package>
-    <package name="ti.sysbios.knl" version="2,0,0,0,0" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.knl" version="2,0,0,0,0" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.knl.Clock"
                 used="false"
                 uses="">
@@ -5310,7 +5310,7 @@
             <feature name="startupHookFunc" type="object" value="null"/>
         </module>
     </package>
-    <package name="ti.sysbios.family.c28" version="2,0,0,0,0" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.family.c28" version="2,0,0,0,0" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.family.c28.TimestampProvider"
                 used="true"
                 uses="">
@@ -6686,7 +6686,7 @@
                 uses="">
         </module>
     </package>
-    <package name="ti.sysbios.utils" version="2,0,0,0,0" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.utils" version="2,0,0,0,0" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.utils.Load"
                 used="true"
                 uses="">
@@ -6815,7 +6815,7 @@
             <feature name="powerEnabled" type="boolean" value="false"/>
         </module>
     </package>
-    <package name="ti.sysbios.gates" version="2,0,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.gates" version="2,0,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.gates.GateHwi"
                 used="true"
                 uses="">
@@ -6956,7 +6956,7 @@
                 uses="">
         </module>
     </package>
-    <package name="ti.sysbios.xdcruntime" version="1,0,0,1542835756466" repository="D:/ti/bios_6_76_03_01/packages/">
+    <package name="ti.sysbios.xdcruntime" version="1,0,0,1542835756466" repository="C:/ti/bios_6_76_03_01/packages/">
         <module name="ti.sysbios.xdcruntime.GateThreadSupport"
                 used="false"
                 uses="">
@@ -6986,9 +6986,9 @@
                 uses="">
         </module>
     </package>
-    <package name="configPkg" version="" repository="D:/ti/Projects/Joystick-Project/ArcadeStick/Debug/">
+    <package name="configPkg" version="" repository="C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/Debug/">
     </package>
-    <package name="xdc.services.io" version="1,0,0,0" repository="D:/ti/xdctools_3_51_01_18_core/packages/">
+    <package name="xdc.services.io" version="1,0,0,0" repository="C:/ti/xdctools_3_51_01_18_core/packages/">
         <module name="xdc.services.io.File"
                 used="false"
                 uses="">
