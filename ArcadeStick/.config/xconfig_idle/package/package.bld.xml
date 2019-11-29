@@ -7,7 +7,7 @@
         <srcFile name="package/cfg/idle_p28L.c"/>
     </sources>
     <configscripts>
-        <srcFile name="C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/idle.cfg"/>
+        <srcFile name="D:/Work/Joystick-Project-master/ArcadeStick/idle.cfg"/>
     </configscripts>
     <makefiles>
         <srcFile name="package.mak" src="package.bld"/>
@@ -20,12 +20,12 @@
     </makefiles>
     <targets>
         <target name="ti.targets.C28_large"
-            version="ti.targets.C28_large{1,0,18.1,4"
-            rawVersion="18.1.4"
+            version="ti.targets.C28_large{1,0,18.12,1"
+            rawVersion="18.12.1"
             platform="ti.platforms.sim28xx"
             isa="28"
             suffix="28L"
-            rootDir="C:/ti/ccsv8/tools/compiler/ti-cgt-c2000_18.1.4.LTS"
+            rootDir="C:/Apps/ti/ccs901/ccs/tools/compiler/ti-cgt-c2000_18.12.1.LTS"
             os="undefined"
             rts="ti.targets.rts2800">
             <model endian="little"
@@ -44,7 +44,7 @@
         isPartial="false"
         xCfgScript="package/cfg/idle_p28L.cfg"
         xCfgPrefix="package/cfg/idle_p28L"
-        cfgScript="C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/idle.cfg"
+        cfgScript="D:/Work/Joystick-Project-master/ArcadeStick/idle.cfg"
         cfgArgs="null"
         />
     </configurations>
@@ -56,7 +56,7 @@
         profile="release"
         xCfgScript="package/cfg/idle_p28L.cfg"
         xCfgPrefix="package/cfg/idle_p28L"
-        cfgScript="C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/idle.cfg"
+        cfgScript="D:/Work/Joystick-Project-master/ArcadeStick/idle.cfg"
         cfgArgs="null"
         />
     </executables>

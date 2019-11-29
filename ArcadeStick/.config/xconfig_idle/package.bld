@@ -11,7 +11,7 @@ var makeAssembly = false;
 var Executable = xdc.module('xdc.bld.Executable');
 
 var exeOpts = new Executable.Attrs({
-        cfgScript: 'C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/idle.cfg',
+        cfgScript: 'D:/Work/Joystick-Project-master/ArcadeStick/idle.cfg',
         profile: 'release',
         cfgHome: 'xconfig_idle',
 });
@@ -40,8 +40,8 @@ else {
 }
 
 var thisObj = {
-    cfg:        'C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/idle.cfg',
-    outputPath: 'C:/Users/Lemuel/Desktop/Joystick-Project/ArcadeStick/.config/xconfig_idle',
+    cfg:        'D:/Work/Joystick-Project-master/ArcadeStick/idle.cfg',
+    outputPath: 'D:/Work/Joystick-Project-master/ArcadeStick/.config/xconfig_idle',
     exeName:    'idle' + suffix,
     exeIntName: 'idle' + suffix.replace('.', '_'),
     targ:       targ,

@@ -69,8 +69,11 @@ int16 right_button = 0; // Corresponds to the 'right' button on the D-pad
 unsigned int JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
 unsigned int JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
 
-int16 LP_count = 0; // low power counter
+int16 frame1_dec = 0;
+int16 frame2_dec = 0;
 
+Uint16 LP_count = 0; // low power counter
+Uint32 load;
 
 
 //function prototypes:
@@ -109,7 +112,7 @@ Int main()
  */
 Void swiSCAN(UArg arg)
 {
-    GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;//determine runtime of thread
+    //GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;//determine runtime of thread
 
     AdcRegs.ADCSOCFRC1.all = 0x1; //start conversion via software
     while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0)
@@ -234,9 +237,6 @@ Void swiSCAN(UArg arg)
     }
 
 
-    //if ((pain % 10) == 0) {
-    //    Semaphore_post(lpsem);
-    //}
 
 
     Swi_post(swisend);
@@ -254,23 +254,27 @@ unsigned int ScaleADC(unsigned int raw)
 
 Void swiUART(UArg arg)
 {
-    GpioDataRegs.GPACLEAR.bit.GPIO0 = 1; //determine run time of thread
-    int16 frame1[8] = {X_button, T_button, O_button, S_button, R1_button, L1_button, start_button, select_button};
-    int16 frame1_dec = 0;
-    int16 frame2_dec = 0;
+    //GpioDataRegs.GPACLEAR.bit.GPIO0 = 1; //determine run time of thread
+    int16 frame1[8] = { 1, 1, O_button, S_button, R1_button, L1_button, start_button, select_button};
+    int16 frame2[8] = { 1, 1,up_button, down_button, left_button, right_button, X_button, T_button};
+
+    //int16 frame1_dec = 0;
+    //int16 frame2_dec = 0;
     int16 i;
     // calculates decimal value for frame 1
     for (i = 0; i < 8; ++i) {
         frame1_dec <<= 1;
         frame1_dec += frame1[i];
+
+
     }
 
-    int16 frame2[8] = {up_button, down_button, left_button, right_button, 0, 0, 0, 0};
     // calculates decimal value for frame 2
     for (i = 0; i < 8; ++i) {
         frame2_dec <<= 1;
         frame2_dec += frame2[i];
     }
+
     //Buttons
     SciaRegs.SCITXBUF = frame1_dec;
     SciaRegs.SCITXBUF = frame2_dec;
@@ -279,7 +283,7 @@ Void swiUART(UArg arg)
     SciaRegs.SCITXBUF = JOYSTICK_Y; //Frame 2
 
     // if frame1 and frame2 are empty incement counter
-    if (frame1_dec == 0 && frame2_dec == 0)
+    if (frame1_dec == 192 && frame2_dec == 192)
     {
         LP_count += 1;
     }
@@ -289,7 +293,7 @@ Void swiUART(UArg arg)
     }
 
     // if no buttons have been pressed for 1 min (tick 0.5sec) enter lp mode
-    if (LP_count >= 120)
+    if (LP_count >= 300000)
     {
         Semaphore_post(lpsem);
     }
@@ -304,8 +308,11 @@ Void swiUART(UArg arg)
  */
 Void myIdleFxn(Void) 
 {
-    GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;//determine run time of thread
-  //load = Load_getCPULoad();
+
+    GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;//determine run time of thread
+    load = Load_getCPULoad();
+    //GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;
+
 
 }
 
