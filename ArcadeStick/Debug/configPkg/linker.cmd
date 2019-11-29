@@ -9,11 +9,11 @@
  */
 
 
--l"D:\Work\Joystick-Project-master\ArcadeStick\Debug\configPkg\package\cfg\idle_p28L.o28L"
--l"D:\Work\Joystick-Project-master\ArcadeStick\src\sysbios\sysbios.a28L"
--l"C:\Apps\ti\bios_6_76_00_08\packages\ti\catalog\c2800\init\lib\Boot.a28L"
--l"C:\Apps\ti\bios_6_76_00_08\packages\ti\targets\rts2800\lib\ti.targets.rts2800.a28L"
--l"C:\Apps\ti\bios_6_76_00_08\packages\ti\targets\rts2800\lib\boot.a28L"
+-l"C:\Users\lemue\Desktop\Joystick-Project\ArcadeStick\Debug\configPkg\package\cfg\idle_p28L.o28L"
+-l"C:\Users\lemue\Desktop\Joystick-Project\ArcadeStick\src\sysbios\sysbios.a28L"
+-l"C:\ti\bios_6_76_02_02\packages\ti\catalog\c2800\init\lib\Boot.a28L"
+-l"C:\ti\bios_6_76_02_02\packages\ti\targets\rts2800\lib\ti.targets.rts2800.a28L"
+-l"C:\ti\bios_6_76_02_02\packages\ti\targets\rts2800\lib\boot.a28L"
 
 /* function aliases */
 

@@ -218,7 +218,7 @@ void DeviceInit(void)
 
 	    //Set baud rate (LSPCLK = 15MHz)
 	    SciaRegs.SCIHBAUD = 0x0000;
-	    SciaRegs.SCILBAUD = 164; //9600 baudrate
+	    SciaRegs.SCILBAUD = 2; //500,000 baud
 
 	    //Control register 1
 	    SciaRegs.SCICTL1.bit.RXENA = 1;
