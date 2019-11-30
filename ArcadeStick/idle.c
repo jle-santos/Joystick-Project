@@ -89,11 +89,6 @@ Int main()
     SysCtrlRegs.LPMCR0.bit.LPM = 0x0000; // LPM mode = Idle
     //SysCtrlRegs.LPMCR0.bit.LPM = 0x0001; // LPM mode = Standby
     //SysCtrlRegs.LPMCR0.bit.LPM = 0x2; // LPM mode = Halt
-    /*D
-     * Print "Gamer's Rise Up" to a log buffer.
-     */
-    System_printf("Gamer's Rise Up\n");
-
     /* 
      * Start BIOS
      * Perform a few final initializations and then
@@ -112,8 +107,7 @@ Int main()
  */
 Void swiSCAN(UArg arg)
 {
-    //GpioDataRegs.GPACLEAR.bit.GPIO0 = 1;//determine runtime of thread
-
+    GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;//flash intime with the tickrate
     AdcRegs.ADCSOCFRC1.all = 0x1; //start conversion via software
     while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0)
         {
@@ -235,12 +229,8 @@ Void swiSCAN(UArg arg)
     } else {
         right_button = 0;
     }
-
-
-
-
-    Swi_post(swisend);
-}
+    Swi_post(swisend);//start uart thread for synchrnoization
+    }
 
 unsigned int ScaleADC(unsigned int raw)
 {
@@ -254,21 +244,14 @@ unsigned int ScaleADC(unsigned int raw)
 
 Void swiUART(UArg arg)
 {
-    //GpioDataRegs.GPACLEAR.bit.GPIO0 = 1; //determine run time of thread
     int16 frame1[8] = { 1, 1, O_button, S_button, R1_button, L1_button, start_button, select_button};
     int16 frame2[8] = { 1, 1,up_button, down_button, left_button, right_button, X_button, T_button};
-
-    //int16 frame1_dec = 0;
-    //int16 frame2_dec = 0;
-    int16 i;
+    int16 i; // index for for-loop
     // calculates decimal value for frame 1
     for (i = 0; i < 8; ++i) {
         frame1_dec <<= 1;
         frame1_dec += frame1[i];
-
-
     }
-
     // calculates decimal value for frame 2
     for (i = 0; i < 8; ++i) {
         frame2_dec <<= 1;
@@ -283,7 +266,7 @@ Void swiUART(UArg arg)
     SciaRegs.SCITXBUF = JOYSTICK_Y; //Frame 2
 
     // if frame1 and frame2 are empty incement counter
-    if (frame1_dec == 192 && frame2_dec == 192)
+    if (frame1_dec == -16192 && frame2_dec == -16192)
     {
         LP_count += 1;
     }
@@ -292,8 +275,8 @@ Void swiUART(UArg arg)
       LP_count = 0;
     }
 
-    // if no buttons have been pressed for 1 min (tick 0.5sec) enter lp mode
-    if (LP_count >= 300000)
+    // if no buttons have been pressed for 1 min (tick 0.1sec) enter lp mode
+    if (LP_count >= 600)
     {
         Semaphore_post(lpsem);
     }
@@ -309,10 +292,7 @@ Void swiUART(UArg arg)
 Void myIdleFxn(Void) 
 {
 
-    GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;//determine run time of thread
     load = Load_getCPULoad();
-    //GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;
-
 
 }
 
@@ -321,9 +301,7 @@ Void myIdleFxn(Void)
 Void Tickrate(Void)
 {
     /* post a Swi to perform the "heavy lifting" */
-    GpioDataRegs.GPASET.bit.GPIO1 = 1;
     Swi_post(swiscan);
-
 }
 
 
@@ -339,12 +317,12 @@ Void LPtsk(Void)
      */
     while (TRUE) {
         /*
-         * Pend on "lpsem" until the timer ISR says
-         * its time to do something.
+         * Pend on "lpsem" until the 1min of no button presses has passed
+         * then enter low power mode
          */
         Semaphore_pend(lpsem, BIOS_WAIT_FOREVER);
         CpuTimer0Regs.TCR.bit.TIE = 0;//disable timer
-        asm(" IDLE");
+        asm(" IDLE");// enter low power mode
     }
 }
 
@@ -352,6 +330,5 @@ Void awaken(Void)
 {
     System_printf("Awaken\n");
     CpuTimer0Regs.TCR.bit.TIE = 1;//re-enable timer
-    LP_count = 0;
-
+    LP_count = 0;//reset low power mode counter
 }
