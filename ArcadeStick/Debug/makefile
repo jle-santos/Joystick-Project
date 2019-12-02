@@ -28,7 +28,15 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include Debug__opt_for_speed__0/subdir_vars.mk
+-include Debug__opt_for_speed__0/configPkg/subdir_vars.mk
+-include Debug__opt_for_speed__0/configPkg/package/subdir_vars.mk
+-include Debug__opt_for_speed__0/configPkg/package/cfg/subdir_vars.mk
 -include subdir_rules.mk
+-include Debug__opt_for_speed__0/subdir_rules.mk
+-include Debug__opt_for_speed__0/configPkg/subdir_rules.mk
+-include Debug__opt_for_speed__0/configPkg/package/subdir_rules.mk
+-include Debug__opt_for_speed__0/configPkg/package/cfg/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

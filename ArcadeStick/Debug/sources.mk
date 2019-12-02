@@ -124,4 +124,8 @@ GEN_OPTS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
+Debug__opt_for_speed__0 \
+Debug__opt_for_speed__0/configPkg \
+Debug__opt_for_speed__0/configPkg/package \
+Debug__opt_for_speed__0/configPkg/package/cfg \
 

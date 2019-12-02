@@ -6,6 +6,7 @@
 // Version:     1.2
 //
 // Modified by: DNR 18Nov2018 for use with SYS/BIOS
+// Modified by: LS & RW for use with ArcadeStick Project
 //===============================================================
 
 #include "Peripheral_Headers/F2802x_Device.h"
@@ -209,41 +210,42 @@ void DeviceInit(void)
 //---------------------------------------------------------------
 
 //---------------------------------------------------------------
-// INITIALIZE SCI (UART)
+// INITIALIZE SCI (UART) (Written by LS)
 //---------------------------------------------------------------
-	    SciaRegs.SCICCR.bit.STOPBITS = 0; //1 Stop bit
-	    SciaRegs.SCICCR.bit.PARITYENA = 0; //No parity
-	    SciaRegs.SCICCR.bit.LOOPBKENA = 0; //No loopback
-	    SciaRegs.SCICCR.bit.SCICHAR = 7; //8 Data bits
+    SciaRegs.SCICCR.bit.STOPBITS = 0; //1 Stop bit
+    SciaRegs.SCICCR.bit.PARITYENA = 0; //No parity
+    SciaRegs.SCICCR.bit.LOOPBKENA = 0; //No loopback
+    SciaRegs.SCICCR.bit.SCICHAR = 7; //8 Data bits
 
-	    //Set baud rate (LSPCLK = 15MHz)
-	    SciaRegs.SCIHBAUD = 0x0000;
-	    SciaRegs.SCILBAUD = 163; //9600
+    //Set baud rate (LSPCLK = 15MHz)
+    SciaRegs.SCIHBAUD = 0x0000;
+    SciaRegs.SCILBAUD = 163; //9600
 
-	    //Control register 1
-	    SciaRegs.SCICTL1.bit.RXENA = 1;
-	    SciaRegs.SCICTL1.bit.TXENA = 1;
-	    SciaRegs.SCICTL1.bit.SLEEP = 0; //Disable sleep
-	    SciaRegs.SCICTL1.bit.TXWAKE = 0;
-	    SciaRegs.SCICTL1.bit.SWRESET = 1;
+    //Control register 1
+    SciaRegs.SCICTL1.bit.RXENA = 1;
+    SciaRegs.SCICTL1.bit.TXENA = 1;
+    SciaRegs.SCICTL1.bit.SLEEP = 0; //Disable sleep
+    SciaRegs.SCICTL1.bit.TXWAKE = 0;
+    SciaRegs.SCICTL1.bit.SWRESET = 1;
 
-	    //Control register 2
-	    SciaRegs.SCICTL2.bit.TXINTENA = 1; //Enable interrupt
-	    SciaRegs.SCICTL2.bit.RXBKINTENA = 1;
+    //Control register 2
+    SciaRegs.SCICTL2.bit.TXINTENA = 1; //Enable interrupt
+    SciaRegs.SCICTL2.bit.RXBKINTENA = 1;
 
-	    //FIFO Registers
-	    SciaRegs.SCIFFTX.all = 0xE080;
-	    SciaRegs.SCIFFRX.all = 0x2084;
+    //FIFO Registers
+    SciaRegs.SCIFFTX.all = 0xE080;
+    SciaRegs.SCIFFRX.all = 0x2084;
 
-	    //SCI GPIO Enable
-	    //  GPIO-29 - PIN FUNCTION = --Spare-- (can connect to SCITX on LaunchPad)
-        GpioCtrlRegs.GPAMUX2.bit.GPIO29 = 1; // 0=GPIO,  1=SCITXD-A,  2=I2C-SCL,  3=TZ3
-        GpioCtrlRegs.GPADIR.bit.GPIO29 = 0; // 1=OUTput,  0=INput
-        //  GpioDataRegs.GPACLEAR.bit.GPIO29 = 1;   // uncomment if --> Set Low initially
-        //  GpioDataRegs.GPASET.bit.GPIO29 = 1; // uncomment if --> Set High initially
-        GpioCtrlRegs.GPAPUD.bit.GPIO29 = 0; //disable internal pull-up resistor
+    //SCI GPIO Enable
+    //  GPIO-29 - PIN FUNCTION = --Spare-- (can connect to SCITX on LaunchPad)
+    GpioCtrlRegs.GPAMUX2.bit.GPIO29 = 1; // 0=GPIO,  1=SCITXD-A,  2=I2C-SCL,  3=TZ3
+    GpioCtrlRegs.GPADIR.bit.GPIO29 = 0; // 1=OUTput,  0=INput
+    //  GpioDataRegs.GPACLEAR.bit.GPIO29 = 1;   // uncomment if --> Set Low initially
+    //  GpioDataRegs.GPASET.bit.GPIO29 = 1; // uncomment if --> Set High initially
+    GpioCtrlRegs.GPAPUD.bit.GPIO29 = 0; //disable internal pull-up resistor
+
 //---------------------------------------------------------------
-// INITIALIZE A-D
+// INITIALIZE A-D ((Written by LS)
 //---------------------------------------------------------------
 //input channel = junction temperature sensor, SOC0, software triggering
 
@@ -281,6 +283,7 @@ void DeviceInit(void)
 
 } // end DeviceInit()
 
+//InitFlash written by RW
 void InitFlash(void)
 {
    EALLOW;

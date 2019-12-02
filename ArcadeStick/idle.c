@@ -1,26 +1,13 @@
-/* 
- *  28x specific Idle example.
- *  
- *  This example:
- * 
- *  1) prints "Hello world" in main()
- *  
- *  2) prints the current value of a counter from
- *     within an Idle function each time an
- *     a timer interrupt goes off.
- * 
- *  All output is routed to a log buffer which can be viewed
- *  using the RTA "Raw Logs" viewer. After loading and running
- *  the application, launch the Tools->RTA->Raw Logs tool to
- *  view the logs.
- */
+//Author: Lemuel Santos & Ryan Wong
+//Date: December 1, 2019
+//Arcade Stick Project - ELEX 7820
+//Sends out commands to computer via SCI communication
+//
+//Code Sections --------------------------------------
+//LS - For code written by Lemuel Santos
+//RW - For code written by Ryan Wong
 
 #define xdc__strict //gets rid of #303-D typedef warning re Uint16, Uint32
-
-#define getTempSlope (*(int (*)(void))0x3d7e80)  //LS
-#define getTempOffset (*(int (*)(void))0x3d7e83) //LS
-
-
 
 #include "Peripheral_Headers/F2802x_Device.h"
 #include <xdc/std.h>
@@ -46,47 +33,50 @@ extern const Semaphore_Handle lpsem;
 /* Counter incremented by timer interrupt */
 volatile UInt tickCount = 0;
 
-// Global Variable:
+// Global Variables:
 int16 pbcount = 0; // help trouble shoot
 
+// Face Buttons
+int16 X_button = 0; // Corresponds to the 'X' button on a controller -RW
+int16 T_button = 0; // Corresponds to the Triangle button on a controller -RW
+int16 O_button = 0; // Corresponds to the 'O' button on a controller -RW
+int16 S_button = 0; // Corresponds to the Square button on a controller -RW
+int16 L1_button = 0; // Corresponds to the 'L1' button on a controller -RW
+int16 R1_button = 0; // Corresponds to the 'R1' button on a controller -RW
 
-int16 X_button = 0; // Corresponds to the 'X' button on a controller
-int16 T_button = 0; // Corresponds to the Triangle button on a controller
-int16 O_button = 0; // Corresponds to the 'O' button on a controller
-int16 S_button = 0; // Corresponds to the Square button on a controller
-int16 L1_button = 0; // Corresponds to the 'L1' button on a controller
-int16 R1_button = 0; // Corresponds to the 'R1' button on a controller
+int16 start_button = 0; // Corresponds to the 'start' button on a controller -RW
+int16 select_button = 0; // Corresponds to the 'select' button on a controller -RW
 
-int16 start_button = 0; // Corresponds to the 'start' button on a controller
-int16 select_button = 0; // Corresponds to the 'select' button on a controller
+// Directional buttons
+int16 up_button = 0; // Corresponds to the 'up' button on the D-pad -RW
+int16 down_button = 0; // Corresponds to the 'down' button on the D-pad -RW
+int16 left_button = 0; // Corresponds to the 'left' button on the D-pad -RW
+int16 right_button = 0; // Corresponds to the 'right' button on the D-pad -RW
 
+unsigned int JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in X direction -LS
+unsigned int JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in Y direction -LS
 
-int16 up_button = 0; // Corresponds to the 'up' button on the D-pad
-int16 down_button = 0; // Corresponds to the 'down' button on the D-pad
-int16 left_button = 0; // Corresponds to the 'left' button on the D-pad
-int16 right_button = 0; // Corresponds to the 'right' button on the D-pad
+int16 frame1_dec = 0; //Variable to store decimal value of frame1 -RW
+int16 frame2_dec = 0; //Variable to store decimal value of frame2 -Rw
 
-unsigned int JOYSTICK_X; //J1 - 2 Corresponds to analog thumb stick in x direction
-unsigned int JOYSTICK_Y; //J2 - 10 Corresponds to analog thumb stick in x direction
+Uint16 LP_count = 0; // Low power counter -RW
+Uint32 load; // CPU Load variable -Rw
 
-int16 frame1_dec = 0;
-int16 frame2_dec = 0;
-
-Uint16 LP_count = 0; // low power counter
-Uint32 load;
-
+// Constant Definitions
+#define INACTIVE -16192 //The value of a frame if it is inactive -LS
+#define ONE_MINUTE 6000 //Number of ticks before entering low power mode -LS
 
 //function prototypes:
 extern void DeviceInit(void);
-unsigned int ScaleADC(unsigned int raw);
+unsigned int ScaleADC(unsigned int raw); //Scales the ADC readings to 8-bit -LS
 
 /*
  *  ======== main ========
  */
 Int main()
 {
-
-    SysCtrlRegs.LPMCR0.bit.LPM = 0x0000; // LPM mode = Idle
+    //Specify the low power mode to be IDLE
+    SysCtrlRegs.LPMCR0.bit.LPM = 0x0000; // LPM mode = Idle -RW
     //SysCtrlRegs.LPMCR0.bit.LPM = 0x0001; // LPM mode = Standby
     //SysCtrlRegs.LPMCR0.bit.LPM = 0x2; // LPM mode = Halt
     /* 
@@ -102,37 +92,38 @@ Int main()
 }
 
 /*
- *  ======== myTickFxn ========
- *  Timer Tick function that increments a counter, and sets the isrFlag.
+ *  ======== swiSCAN ========
+ *  Polls button presses and samples the joystick
  */
 Void swiSCAN(UArg arg)
 {
     GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;//flash intime with the tickrate
-    AdcRegs.ADCSOCFRC1.all = 0x1; //start conversion via software
-    while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0)
-        {
-        ; //wait for interrupt flag to be set
-        }
-    AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear interrupt flag
 
-    JOYSTICK_X = ScaleADC(AdcResult.ADCRESULT0); //get X Reading
-    JOYSTICK_Y = ScaleADC(AdcResult.ADCRESULT1); //Get Y Reading
+    AdcRegs.ADCSOCFRC1.all = 0x1; //Start conversion via software -LS
+    while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0) //Poll for the ADC flag -LS
+        {
+        ; //wait for interrupt flag to be set -LS
+        }
+    AdcRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear interrupt flag -LS
+
+    JOYSTICK_X = ScaleADC(AdcResult.ADCRESULT0); //Get X Reading and scale -LS
+    JOYSTICK_Y = ScaleADC(AdcResult.ADCRESULT1); //Get Y Reading and scale -LS
     //LS (Everything above)
 
-    int16 test1; // test input value
-    int16 test2; // test input value
-    int16 test3; // test input value
-    int16 test4; // test input value
-    int16 test5; // test input value
-    int16 test6; // test input value
-    int16 test7; // test input value
-    int16 test8; // test input value
-    int16 test9; // test input value
-    int16 test10; // test input value
-    int16 test11; // test input value
-    int16 test12; // test input value
+    int16 test1; // test input value -RW
+    int16 test2; // test input value -RW
+    int16 test3; // test input value -RW
+    int16 test4; // test input value -RW
+    int16 test5; // test input value -RW
+    int16 test6; // test input value -RW
+    int16 test7; // test input value -RW
+    int16 test8; // test input value -RW
+    int16 test9; // test input value -RW
+    int16 test10; // test input value -RW
+    int16 test11; // test input value -RW
+    int16 test12; // test input value -RW
 
-
+    /* Start - Section below written by RW */
     test1 = GpioDataRegs.GPADAT.bit.GPIO19; // test for X button press on GPIO19
     if(test1 == 0) // active low
     {
@@ -229,30 +220,37 @@ Void swiSCAN(UArg arg)
     } else {
         right_button = 0;
     }
-    Swi_post(swisend);//start uart thread for synchrnoization
+    /* End -End of section by RW */
+
+    Swi_post(swisend);//start UART thread for synchrnoization -RW
     }
 
+//Function written by LS
 unsigned int ScaleADC(unsigned int raw)
 {
     unsigned int ScaledOutput = 0;
 
-    ScaledOutput = raw/16;
+    ScaledOutput = raw/16; //Example: 4096/16 = 256 (8-bit maximum) -LS
 
     return ScaledOutput;
 }
 
-
+/*
+ *  ======== swiUART ========
+ *  Sends the data frames via SCI
+ */
 Void swiUART(UArg arg)
 {
-    int16 frame1[8] = { 1, 1, O_button, S_button, R1_button, L1_button, start_button, select_button};
-    int16 frame2[8] = { 1, 1,up_button, down_button, left_button, right_button, X_button, T_button};
-    int16 i; // index for for-loop
-    // calculates decimal value for frame 1
+    int16 frame1[8] = { 1, 1, O_button, S_button, R1_button, L1_button, start_button, select_button}; //Compile data into one array (Face Buttons) -RW
+    int16 frame2[8] = { 1, 1,up_button, down_button, left_button, right_button, X_button, T_button};  //Compile data into one aray (Directional Buttons) -RW
+    int16 i; // index for for-loop -RW
+
+    // calculates decimal value for frame 1 -RW
     for (i = 0; i < 8; ++i) {
         frame1_dec <<= 1;
         frame1_dec += frame1[i];
     }
-    // calculates decimal value for frame 2
+    // calculates decimal value for frame 2 -Rw
     for (i = 0; i < 8; ++i) {
         frame2_dec <<= 1;
         frame2_dec += frame2[i];
@@ -267,8 +265,8 @@ Void swiUART(UArg arg)
 
     SciaRegs.SCITXBUF = 0x0A; //EOL Check -LS
 
-    // if frame1 and frame2 are empty incement counter
-    if (frame1_dec == -16192 && frame2_dec == -16192)
+    // if frame1 and frame2 are empty increment counter -RW
+    if (frame1_dec == INACTIVE && frame2_dec == INACTIVE)
     {
         LP_count += 1;
     }
@@ -277,10 +275,10 @@ Void swiUART(UArg arg)
       LP_count = 0;
     }
 
-    // if no buttons have been pressed for 1 min (tick 0.1sec) enter lp mode
-    if (LP_count >= 6000)
+    // if no buttons have been pressed for 1 minute (tick 0.01sec) enter LPM -RW
+    if (LP_count >= ONE_MINUTE)
     {
-        Semaphore_post(lpsem);
+        Semaphore_post(lpsem); //Post semaphore allowing entry into LPM -RW
     }
 }
 
@@ -293,44 +291,50 @@ Void swiUART(UArg arg)
  */
 Void myIdleFxn(Void) 
 {
-
+    //Calculate the CPU load on the system -RW
     load = Load_getCPULoad();
 
 }
 
-// fires every 0.5 seconds
-// sets tick rate
+/*
+ *  ======== Tickrate ========
+ *  Timer that raises an interrupt every 0.01 seconds (100Hz)
+ */
 Void Tickrate(Void)
 {
-    /* post a Swi to perform the "heavy lifting" */
+    /* post a Swi to perform the "heavy lifting" -RW*/
     Swi_post(swiscan);
 }
 
 
 /*
- *  ======== myTaskFxn ========
- *  Task function that pends on a semaphore until 10 ticks have
+ *  ======== LPtsk ========
+ *  Task function that pends on a semaphore until 6000 ticks have
  *  expired.
  */
 Void LPtsk(Void)
 {
     /*
-     * Do this forever
+     * Do this forever during IDLE -RW
      */
     while (TRUE) {
         /*
          * Pend on "lpsem" until the 1min of no button presses has passed
-         * then enter low power mode
+         * then enter low power mode -RW
          */
         Semaphore_pend(lpsem, BIOS_WAIT_FOREVER);
-        CpuTimer0Regs.TCR.bit.TIE = 0;//disable timer
-        asm(" IDLE");// enter low power mode
+        CpuTimer0Regs.TCR.bit.TIE = 0;//disable timer -RW
+        asm(" IDLE");// enter low power mode -RW
     }
 }
 
+/*
+ *  ======== awaken ========
+ *  Hardware interrupt that turns on CPU timers resuming the device
+ */
 Void awaken(Void)
 {
     System_printf("Awaken\n");
-    CpuTimer0Regs.TCR.bit.TIE = 1;//re-enable timer
-    LP_count = 0;//reset low power mode counter
+    CpuTimer0Regs.TCR.bit.TIE = 1;//re-enable timer -RW
+    LP_count = 0;//reset low power mode counter -RW
 }
