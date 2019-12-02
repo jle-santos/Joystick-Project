@@ -259,11 +259,13 @@ Void swiUART(UArg arg)
     }
 
     //Buttons
-    SciaRegs.SCITXBUF = frame1_dec;
-    SciaRegs.SCITXBUF = frame2_dec;
+    SciaRegs.SCITXBUF = frame1_dec; //Face buttons -LS
+    SciaRegs.SCITXBUF = frame2_dec; //Directional buttons -LS
 
-    SciaRegs.SCITXBUF = JOYSTICK_X; //Frame 2
-    SciaRegs.SCITXBUF = JOYSTICK_Y; //Frame 2
+    SciaRegs.SCITXBUF = JOYSTICK_X; //Joystick X Axes -LS
+    SciaRegs.SCITXBUF = JOYSTICK_Y; //Joystick Y Axes -LS
+
+    SciaRegs.SCITXBUF = 0x0A; //EOL Check -LS
 
     // if frame1 and frame2 are empty incement counter
     if (frame1_dec == -16192 && frame2_dec == -16192)
@@ -276,7 +278,7 @@ Void swiUART(UArg arg)
     }
 
     // if no buttons have been pressed for 1 min (tick 0.1sec) enter lp mode
-    if (LP_count >= 600)
+    if (LP_count >= 6000)
     {
         Semaphore_post(lpsem);
     }
