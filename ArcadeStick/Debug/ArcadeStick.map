@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v18.1.4                     
 ******************************************************************************
->> Linked Sun Dec  1 20:25:52 2019
+>> Linked Sun Dec  1 20:30:41 2019
 
 OUTPUT FILE NAME:   <ArcadeStick.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 003f13f7
@@ -1088,7 +1088,7 @@ abs   00000000  _RamfuncsLoadSize
 1     00008000  _RamfuncsLoadStart                                        
 1     00008000  _RamfuncsRunStart                                         
 1     00008810  _S_button                                                 
-0     003f0305  _ScaleADC                                                 
+0     003f0301  _ScaleADC                                                 
 1     00007050  _SciaRegs                                                 
 1     00007040  _SpiaRegs                                                 
 1     00007010  _SysCtrlRegs                                              
@@ -1147,7 +1147,7 @@ abs   ffffffff  ___pinit__
 0     003f281d  _malloc                                                   
 0     003f21d7  _memcpy                                                   
 0     003f262f  _memset                                                   
-0     003f038b  _myIdleFxn                                                
+0     003f0387  _myIdleFxn                                                
 1     00008816  _parmbuf                                                  
 1     0000880c  _pbcount                                                  
 1     00008802  _right_button                                             
@@ -1155,7 +1155,7 @@ abs   ffffffff  ___pinit__
 1     00008804  _start_button                                             
 0     003f2735  _strlen                                                   
 0     003f022d  _swiSCAN                                                  
-0     003f030c  _swiUART                                                  
+0     003f0308  _swiUART                                                  
 0     003f4014  _swiscan                                                  
 0     003f400e  _swisend                                                  
 0     003f1ccf  _ti_catalog_c2800_init_Boot_configurePll2802x             
@@ -1618,9 +1618,9 @@ page  address   name
 0     003f0000  _xdc_runtime_System_doPrint__I                            
 0     003f0223  _main                                                     
 0     003f022d  _swiSCAN                                                  
-0     003f0305  _ScaleADC                                                 
-0     003f030c  _swiUART                                                  
-0     003f038b  _myIdleFxn                                                
+0     003f0301  _ScaleADC                                                 
+0     003f0308  _swiUART                                                  
+0     003f0387  _myIdleFxn                                                
 0     003f0391  _Tickrate                                                 
 0     003f0397  _LPtsk                                                    
 0     003f03a6  _awaken                                                   

@@ -97,7 +97,7 @@ Int main()
  */
 Void swiSCAN(UArg arg)
 {
-    GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;//flash intime with the tickrate
+    //GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;//flash intime with the tickrate
 
     AdcRegs.ADCSOCFRC1.all = 0x1; //Start conversion via software -LS
     while(AdcRegs.ADCINTFLG.bit.ADCINT1 == 0) //Poll for the ADC flag -LS
@@ -293,7 +293,7 @@ Void myIdleFxn(Void)
 {
     //Calculate the CPU load on the system -RW
     load = Load_getCPULoad();
-
+    GpioDataRegs.GPATOGGLE.bit.GPIO0 = 1;
 }
 
 /*

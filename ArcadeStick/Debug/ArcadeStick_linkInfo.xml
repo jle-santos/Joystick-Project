@@ -2,7 +2,7 @@
 <link_info>
    <banner>TMS320C2000 Linker PC v18.1.4.LTS</banner>
    <copyright>Copyright (c) 1996-2018 Texas Instruments Incorporated</copyright>
-   <link_time>0x5de49250</link_time>
+   <link_time>0x5de49371</link_time>
    <link_errors>0x0</link_errors>
    <output_file>ArcadeStick.out</output_file>
    <entry_point>
@@ -7105,7 +7105,7 @@
       </symbol>
       <symbol id="sm-160">
          <name>_ScaleADC</name>
-         <value>0x3f0305</value>
+         <value>0x3f0301</value>
          <object_component_ref idref="oc-15c"/>
       </symbol>
       <symbol id="sm-161">
@@ -7120,7 +7120,7 @@
       </symbol>
       <symbol id="sm-163">
          <name>_myIdleFxn</name>
-         <value>0x3f038b</value>
+         <value>0x3f0387</value>
          <object_component_ref idref="oc-15c"/>
       </symbol>
       <symbol id="sm-164">
@@ -7145,7 +7145,7 @@
       </symbol>
       <symbol id="sm-168">
          <name>_swiUART</name>
-         <value>0x3f030c</value>
+         <value>0x3f0308</value>
          <object_component_ref idref="oc-15c"/>
       </symbol>
       <symbol id="sm-169">
